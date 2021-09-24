@@ -1,0 +1,30 @@
+# 7½7M archives
+# script for QuickBMS http://quickbms.aluigi.org
+
+idstring "7\xbd7M"  # avoid possible problems with some text editors
+filexor 0xf7
+
+goto 9
+savepos START
+do
+    get FNAMESZ byte
+    getdstring FNAME FNAMESZ
+    get SIZE long
+    get SKIP long
+    get SKIP long
+    get LASTFILE byte
+while LASTFILE != 0x80
+
+savepos OFFSET
+goto START
+do
+    get FNAMESZ byte
+    getdstring FNAME FNAMESZ
+    get SIZE long
+    get SKIP long
+    get SKIP long
+    get LASTFILE byte
+
+    log FNAME OFFSET SIZE
+    math OFFSET += SIZE
+while LASTFILE != 0x80
